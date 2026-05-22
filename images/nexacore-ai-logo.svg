@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 60" role="img" aria-label="Nexacore AI logo">
-  <rect width="260" height="60" rx="10" fill="none"/>
-  <g>
-    <circle cx="30" cy="30" r="20" fill="#0C1F64"/>
-    <path d="M20 42 L26 42 L26 24 L34 24 L34 42 L40 42 L40 18 L20 18 Z" fill="#FFFFFF"/>
-  </g>
-  <text x="58" y="36" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#0C1F64" font-weight="700">Nexacore <tspan fill="#0C1F64">AI</tspan></text>
-</svg>
