@@ -1,109 +1,463 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<title>Industries</title>
-<link href="css/bootstrap.min.css" rel="stylesheet"/>
-<link href="css/style.css" rel="stylesheet"/>
-<link href="css/responsive.css" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Industries - Nexacore AI Technologies</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #06071a; color: #e2e8f0; }
+
+    /* ── Navbar (matches site style) ── */
+    .navbar {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
+      background: rgba(6, 7, 26, 0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(99, 102, 241, 0.15);
+      padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 72px;
+    }
+    .navbar .logo img { height: 38px; }
+    .navbar nav { display: flex; gap: 32px; list-style: none; align-items: center; }
+    .navbar nav a { color: #cbd5e1; text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+    .navbar nav a:hover, .navbar nav a.active { color: #818cf8; }
+    .nav-cta { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff !important; padding: 8px 22px; border-radius: 50px; font-weight: 600 !important; }
+
+    /* ── Page hero ── */
+    .page-hero {
+      padding: 140px 40px 80px;
+      text-align: center;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(99,102,241,.18) 0%, transparent 70%);
+    }
+    .page-hero .badge {
+      display: inline-block; padding: 6px 18px; border-radius: 50px;
+      background: rgba(99,102,241,.15); border: 1px solid rgba(99,102,241,.4);
+      font-size: 12px; font-weight: 700; letter-spacing: 2px; color: #818cf8;
+      text-transform: uppercase; margin-bottom: 20px;
+    }
+    .page-hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.15; }
+    .page-hero h1 span { background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .page-hero p { margin-top: 18px; font-size: 17px; color: #94a3b8; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+    /* ── Industry tabs ── */
+    .industry-tabs {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 12px;
+      padding: 0 40px 60px;
+    }
+    .tab-btn {
+      padding: 10px 24px; border-radius: 50px; border: 1px solid rgba(99,102,241,.3);
+      background: rgba(99,102,241,.08); color: #94a3b8; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: all .25s; text-decoration: none; display: inline-block;
+    }
+    .tab-btn:hover, .tab-btn.active {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff; border-color: transparent;
+      box-shadow: 0 4px 20px rgba(99,102,241,.4);
+    }
+
+    /* ── Industry sections ── */
+    .industry-section {
+      padding: 80px 40px; max-width: 1200px; margin: 0 auto;
+      border-bottom: 1px solid rgba(99,102,241,.1);
+    }
+    .industry-section:last-of-type { border-bottom: none; }
+
+    .industry-header { display: flex; align-items: flex-start; gap: 24px; margin-bottom: 48px; }
+    .industry-icon {
+      width: 72px; height: 72px; border-radius: 20px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 32px;
+    }
+    .industry-icon.healthcare { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+    .industry-icon.finance    { background: linear-gradient(135deg, #10b981, #059669); }
+    .industry-icon.ecommerce  { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .industry-icon.retail     { background: linear-gradient(135deg, #ec4899, #db2777); }
+    .industry-icon.banking    { background: linear-gradient(135deg, #6366f1, #4f46e5); }
+
+    .industry-title-group h2 { font-size: 2rem; font-weight: 800; }
+    .industry-title-group .subtitle { font-size: 15px; color: #94a3b8; margin-top: 8px; max-width: 560px; line-height: 1.7; }
+
+    /* ── Cards grid ── */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+    .card {
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+      border-radius: 20px; padding: 28px; transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .card:hover {
+      transform: translateY(-4px); border-color: rgba(99,102,241,.4);
+      box-shadow: 0 8px 32px rgba(99,102,241,.15);
+    }
+    .card-icon { font-size: 28px; margin-bottom: 16px; }
+    .card h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+    .card p { font-size: 14px; color: #94a3b8; line-height: 1.7; }
+
+    /* ── Stats row ── */
+    .stats-row { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 48px; }
+    .stat-box {
+      flex: 1; min-width: 160px;
+      background: rgba(99,102,241,.08); border: 1px solid rgba(99,102,241,.2);
+      border-radius: 16px; padding: 24px; text-align: center;
+    }
+    .stat-box .num { font-size: 2.2rem; font-weight: 800; background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .stat-box .label { font-size: 13px; color: #94a3b8; margin-top: 4px; }
+
+    /* ── CTA strip ── */
+    .cta-strip {
+      text-align: center; padding: 80px 40px;
+      background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(99,102,241,.18) 0%, transparent 70%);
+    }
+    .cta-strip h2 { font-size: clamp(1.6rem, 4vw, 2.5rem); font-weight: 800; margin-bottom: 16px; }
+    .cta-strip p { color: #94a3b8; margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .cta-btn {
+      display: inline-block; padding: 14px 36px; border-radius: 50px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff;
+      font-size: 15px; font-weight: 700; text-decoration: none;
+      box-shadow: 0 6px 24px rgba(99,102,241,.45); transition: transform .2s, box-shadow .2s;
+    }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(99,102,241,.55); }
+
+    /* ── Footer ── */
+    footer {
+      background: rgba(0,0,0,.4); border-top: 1px solid rgba(99,102,241,.1);
+      padding: 48px 40px 24px; text-align: center;
+    }
+    footer .footer-logo img { height: 36px; margin-bottom: 20px; }
+    footer .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 24px; margin-bottom: 24px; list-style: none; }
+    footer .footer-links a { color: #94a3b8; text-decoration: none; font-size: 14px; transition: color .2s; }
+    footer .footer-links a:hover { color: #818cf8; }
+    footer .copyright { color: #475569; font-size: 13px; }
+
+    @media(max-width: 768px) {
+      .navbar { padding: 0 20px; }
+      .navbar nav { gap: 16px; }
+      .industry-header { flex-direction: column; gap: 16px; }
+      .industry-section { padding: 60px 20px; }
+      .page-hero { padding: 120px 20px 60px; }
+      .industry-tabs { padding: 0 20px 40px; }
+    }
+  </style>
 </head>
 <body>
-<div class="accordion-section-one">
-<div class="container">
-<div class="row">
-<div class="col-xl-12">
-<div class="sec-title text-center">
-<div class="section-sub-title">
-<h5 class="sub-title split_chars">FAQâs</h5>
+
+<!-- ── Navbar ── -->
+<header class="navbar">
+  <a href="index.html" class="logo">
+    <img src="images/nexacore-ai-logo.svg" alt="Nexacore AI Technologies" />
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="service.html">Services</a>
+    <a href="industries.html" class="active">Industries</a>
+    <a href="contact.html" class="nav-cta">Contact Us</a>
+  </nav>
+</header>
+
+<!-- ── Hero ── -->
+<section class="page-hero">
+  <span class="badge">Industries We Serve</span>
+  <h1>AI Solutions Built for<br /><span>Every Industry</span></h1>
+  <p>Nexacore AI delivers purpose-built technology solutions tailored to the unique challenges of each sector — from compliance-heavy banking to fast-paced e-commerce.</p>
+</section>
+
+<!-- ── Quick-jump tabs ── -->
+<div class="industry-tabs">
+  <a href="#healthcare" class="tab-btn">🏥 Healthcare</a>
+  <a href="#finance" class="tab-btn">📈 Finance</a>
+  <a href="#ecommerce" class="tab-btn">🛒 E-Commerce</a>
+  <a href="#retail" class="tab-btn">🏪 Retail</a>
+  <a href="#banking" class="tab-btn">🏦 Banking</a>
 </div>
-<div class="section-title">
-<h1 class="title split-text">Frequently Asked Questions to </h1>
-<h1 class="title split-text">Guide Your AI Journey</h1>
-</div>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-xl-6 col-lg-6">
-<!-- Start Accordion -->
-<div class="tab_container">
-<div class="tab_content" id="tab1">
-<ul class="accordion">
-<li>
-<a> <span></span>How can AI benefit my business?</a>
-<p>Monotonectally whiteboard proactive value with leading
-									niche markets rather than fully tested results
-								</p>
-</li>
-<li>
-<a> <span></span>Do I need coding skills to use your AI platform?</a>
-<p>Monotonectally whiteboard proactive value with leading
-									niche markets rather than fully tested results
-								</p>
-</li>
-<li>
-<a> <span></span>Can I use AI my existing software?</a>
-<p>Monotonectally whiteboard proactive value with leading
-									niche markets rather than fully tested results
-								</p>
-</li>
-<li>
-<a> <span></span>What kinds of tools do you have?</a>
-<p>Monotonectally whiteboard proactive value with leading
-									niche markets rather than fully tested results
-								</p>
-</li>
-</ul>
-</div>
-</div>
-<!-- End Accordion -->
-</div>
-<div class="col-xl-6 col-lg-6">
-<!-- Start Accordion -->
-<div class="tab_container">
-<div class="tab_content">
-<ul class="accordion">
-<li>
-<a> <span></span>What industries can your AI solutions?</a>
-<p>Monotonectally whiteboard proactive value with leading
-									niche markets rather than fully tested results
-								</p>
-</li>
-<li>
-<a> <span></span>What the latest technology for AI?</a>
-<p>Monotonectally whiteboard proactive value with leading
-									niche markets rather than fully tested results
-								</p>
-</li>
-<li>
-<a> <span></span>Do you support Payoneer/Paypal?</a>
-<p>Monotonectally whiteboard proactive value with leading
-									niche markets rather than fully tested results
-								</p>
-</li>
-<li>
-<a> <span></span>Have any Custom Services?</a>
-<p>Monotonectally whiteboard proactive value with leading
-									niche markets rather than fully tested results
-								</p>
-</li>
-</ul>
-</div>
-</div>
-<!-- End Accordion -->
-</div>
-</div>
-</div>
-<div class="accordion-effient fade-in">
-<img alt="accordion effient" src="images/demo-img/accrodion-effient.png"/>
-</div>
-<div class="accordion-shape1 fade-in">
-<img alt="accordion shape" src="images/demo-img/accrodion-shape1.png"/>
-</div>
-<div class="accordion-shape2 fade-in">
-<img alt="accordion shape" src="images/demo-img/accrodion-shape2.png"/>
-</div>
-</div>
+
+<!-- ══════════════════════════════════════
+     HEALTHCARE
+══════════════════════════════════════ -->
+<section class="industry-section" id="healthcare">
+  <div class="industry-header">
+    <div class="industry-icon healthcare">🏥</div>
+    <div class="industry-title-group">
+      <h2>Healthcare</h2>
+      <p class="subtitle">Nexacore AI empowers healthcare providers, hospitals, and health-tech companies with intelligent automation, predictive diagnostics support, and secure data management — all built with HIPAA-compliance in mind.</p>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">🤖</div>
+      <h3>AI-Powered Diagnostics Assistance</h3>
+      <p>Machine learning models trained on medical imaging and patient data help clinicians detect anomalies earlier and with greater confidence, reducing diagnostic errors by up to 35%.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📋</div>
+      <h3>Clinical Workflow Automation</h3>
+      <p>Automate appointment scheduling, discharge summaries, prior authorizations, and billing workflows — freeing clinical staff to focus on patient care rather than paperwork.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔒</div>
+      <h3>HIPAA-Compliant Data Platform</h3>
+      <p>Secure cloud infrastructure with end-to-end encryption, role-based access control, and full audit trails ensuring your patient data remains protected at every touchpoint.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">💬</div>
+      <h3>Patient Engagement Chatbots</h3>
+      <p>24/7 AI assistants handle appointment bookings, medication reminders, symptom triage, and FAQs — improving patient satisfaction scores and reducing call-center load.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <h3>Predictive Population Health</h3>
+      <p>Identify high-risk patient cohorts before they become critical cases. Predictive models analyse EHR data to surface early intervention opportunities across large populations.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔗</div>
+      <h3>EHR & HL7 Integration</h3>
+      <p>Seamless integration with Epic, Cerner, and other major EHR platforms using HL7 FHIR standards — no rip-and-replace required.</p>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-box"><div class="num">40%</div><div class="label">Reduction in Admin Time</div></div>
+    <div class="stat-box"><div class="num">3×</div><div class="label">Faster Diagnostics Workflows</div></div>
+    <div class="stat-box"><div class="num">99.9%</div><div class="label">Data Uptime & Security</div></div>
+    <div class="stat-box"><div class="num">60+</div><div class="label">Healthcare Clients Served</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FINANCE
+══════════════════════════════════════ -->
+<section class="industry-section" id="finance">
+  <div class="industry-header">
+    <div class="industry-icon finance">📈</div>
+    <div class="industry-title-group">
+      <h2>Finance</h2>
+      <p class="subtitle">From algorithmic trading assistants to real-time fraud detection, Nexacore AI gives financial services firms the edge they need in a fast-moving, regulation-heavy environment.</p>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">🚨</div>
+      <h3>Real-Time Fraud Detection</h3>
+      <p>ML models monitor millions of transactions per second, flagging anomalies with sub-millisecond latency. Reduce false positives by 60% while catching more genuine fraud.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📉</div>
+      <h3>Risk & Credit Scoring</h3>
+      <p>Advanced credit scoring models that incorporate alternative data sources, providing fairer, more accurate assessments for both lenders and borrowers.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧾</div>
+      <h3>Regulatory Compliance Automation</h3>
+      <p>Automate KYC/AML checks, generate regulatory reports, and maintain compliance with SEBI, RBI, MiFID II, and other frameworks — without the manual overhead.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">💡</div>
+      <h3>AI Investment Insights</h3>
+      <p>Natural language processing engines that parse earnings calls, news, and SEC filings to surface actionable market intelligence and sentiment signals for portfolio managers.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤝</div>
+      <h3>Wealth Management Automation</h3>
+      <p>Personalised robo-advisory features, automated portfolio rebalancing, and client reporting dashboards that scale human advisors to 10× their client base.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚙️</div>
+      <h3>Back-Office Process Automation</h3>
+      <p>Intelligent document processing for reconciliations, trade confirmations, and invoice handling — reducing operational costs by up to 45%.</p>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-box"><div class="num">60%</div><div class="label">Fewer False Fraud Alerts</div></div>
+    <div class="stat-box"><div class="num">45%</div><div class="label">Lower Operational Costs</div></div>
+    <div class="stat-box"><div class="num">2ms</div><div class="label">Transaction Monitoring Latency</div></div>
+    <div class="stat-box"><div class="num">100%</div><div class="label">Regulatory Audit Trail</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     E-COMMERCE
+══════════════════════════════════════ -->
+<section class="industry-section" id="ecommerce">
+  <div class="industry-header">
+    <div class="industry-icon ecommerce">🛒</div>
+    <div class="industry-title-group">
+      <h2>E-Commerce</h2>
+      <p class="subtitle">Turn browsers into buyers and buyers into loyal customers. Nexacore AI delivers personalisation engines, demand forecasting, and intelligent customer support that scale with your growth.</p>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">🎯</div>
+      <h3>AI Personalisation Engine</h3>
+      <p>Real-time recommendation systems analyse browsing history, purchase patterns, and contextual signals to show every shopper products they're most likely to buy — lifting average order value by 28%.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📦</div>
+      <h3>Demand Forecasting & Inventory</h3>
+      <p>Predict demand at SKU level, automatically reorder stock, and reduce both overstock and stockouts — cutting carrying costs and preventing lost sales simultaneously.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">💬</div>
+      <h3>Conversational Shopping Assistants</h3>
+      <p>AI chatbots that guide shoppers through discovery, answer product questions, manage returns, and upsell — delivering human-quality service at machine scale.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔍</div>
+      <h3>Visual & Semantic Search</h3>
+      <p>Allow shoppers to search by image or natural language. Our semantic search engine understands intent, not just keywords — dramatically improving product discoverability.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏷️</div>
+      <h3>Dynamic Pricing Intelligence</h3>
+      <p>Monitor competitor prices and market demand in real time, then automatically adjust your pricing strategy to maximise revenue without sacrificing conversion rate.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🛡️</div>
+      <h3>Returns & Fraud Prevention</h3>
+      <p>ML models identify high-risk orders and serial return fraudsters before shipment, reducing returns abuse by up to 38% without harming legitimate customer experience.</p>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-box"><div class="num">28%</div><div class="label">Higher Average Order Value</div></div>
+    <div class="stat-box"><div class="num">35%</div><div class="label">Increase in Conversion Rate</div></div>
+    <div class="stat-box"><div class="num">38%</div><div class="label">Reduction in Returns Fraud</div></div>
+    <div class="stat-box"><div class="num">24/7</div><div class="label">AI Customer Support</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     RETAIL
+══════════════════════════════════════ -->
+<section class="industry-section" id="retail">
+  <div class="industry-header">
+    <div class="industry-icon retail">🏪</div>
+    <div class="industry-title-group">
+      <h2>Retail</h2>
+      <p class="subtitle">Bridge the gap between physical and digital retail. Nexacore AI helps retailers optimise every inch of their store, their supply chain, and their customer journey with data-driven intelligence.</p>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">🗺️</div>
+      <h3>Store Layout & Planogram Optimisation</h3>
+      <p>Computer vision and foot-traffic analytics identify the most profitable product placements, reducing time-to-purchase and maximising basket size across your store network.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔄</div>
+      <h3>Omnichannel Inventory Sync</h3>
+      <p>Unified inventory management across physical stores, e-commerce platforms, and dark stores — with real-time stock visibility to fulfil same-day and BOPIS orders seamlessly.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">👁️</div>
+      <h3>Computer Vision & Loss Prevention</h3>
+      <p>AI-powered CCTV analytics detect shoplifting, phantom scans, and sweethearting in real time — reducing shrinkage by an average of 25% across retail chains.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📣</div>
+      <h3>Hyper-Personalised Marketing</h3>
+      <p>Segment customers by lifetime value, purchase behaviour, and intent signals. Deliver personalised promotions via email, SMS, and push — at exactly the right moment.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🚚</div>
+      <h3>Supply Chain Visibility</h3>
+      <p>End-to-end supply chain dashboards with AI-powered delay prediction and automated supplier communication — ensuring shelves are always stocked when customers arrive.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">💳</div>
+      <h3>Loyalty & Customer Retention AI</h3>
+      <p>Churn prediction models identify at-risk loyal customers before they defect, triggering automated personalised win-back campaigns with proven offers.</p>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-box"><div class="num">25%</div><div class="label">Shrinkage Reduction</div></div>
+    <div class="stat-box"><div class="num">18%</div><div class="label">Improvement in Basket Size</div></div>
+    <div class="stat-box"><div class="num">30%</div><div class="label">Faster Supply Chain Response</div></div>
+    <div class="stat-box"><div class="num">2×</div><div class="label">Customer Retention Rate</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     BANKING
+══════════════════════════════════════ -->
+<section class="industry-section" id="banking">
+  <div class="industry-header">
+    <div class="industry-icon banking">🏦</div>
+    <div class="industry-title-group">
+      <h2>Banking</h2>
+      <p class="subtitle">Nexacore AI helps banks modernise their core operations, deliver superior digital experiences, and maintain ironclad security — all while staying ahead of evolving regulatory requirements.</p>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">📱</div>
+      <h3>Digital Banking Transformation</h3>
+      <p>Full-stack digital banking solutions — from mobile app AI assistants to API-first core banking modernisation — helping traditional banks compete with neobanks on experience.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🛡️</div>
+      <h3>Anti-Money Laundering (AML) AI</h3>
+      <p>Graph-based transaction monitoring detects complex money laundering networks that rules-based systems miss, while cutting false positive rates by 55% to reduce investigator burden.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🪪</div>
+      <h3>KYC & Identity Verification</h3>
+      <p>Automated document verification, liveness detection, and biometric matching complete KYC onboarding in under 2 minutes while maintaining full regulatory compliance.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">💰</div>
+      <h3>Loan Origination Automation</h3>
+      <p>End-to-end loan processing automation — from application ingestion and credit decisioning to document generation and disbursement — reducing time-to-fund from days to hours.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧠</div>
+      <h3>Conversational Banking AI</h3>
+      <p>Intelligent virtual assistants handle balance inquiries, fund transfers, account servicing, and financial guidance — deflecting up to 70% of contact centre volume.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📐</div>
+      <h3>Regulatory Reporting & Stress Testing</h3>
+      <p>Automated BASEL IV, RBI, and IFRS 9 reporting pipelines with built-in data lineage. Run scenario-based stress tests in hours rather than weeks.</p>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-box"><div class="num">55%</div><div class="label">Fewer AML False Positives</div></div>
+    <div class="stat-box"><div class="num">2 min</div><div class="label">KYC Onboarding Time</div></div>
+    <div class="stat-box"><div class="num">70%</div><div class="label">Contact Centre Deflection</div></div>
+    <div class="stat-box"><div class="num">Hours</div><div class="label">vs Weeks for Stress Tests</div></div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-strip">
+  <h2>Ready to Transform Your Industry?</h2>
+  <p>Talk to our solutions team and get a custom AI roadmap tailored to your sector's challenges.</p>
+  <a href="contact.html" class="cta-btn">Book a Free Consultation →</a>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="footer-logo">
+    <img src="images/nexacore-ai-logo.svg" alt="Nexacore AI Technologies" />
+  </div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="service.html">Services</a></li>
+    <li><a href="industries.html">Industries</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <p class="copyright">© 2026 Nexacore AI Technologies. All Rights Reserved. | India</p>
+</footer>
+
 </body>
 </html>
