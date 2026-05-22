@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'linearicons-free';
-  src:  url('../fonts/linearicons-free.eot?4l2k0u');
-  src:  url('../fonts/linearicons-free.eot?4l2k0u#iefix') format('embedded-opentype'),
-    url('../fonts/linearicons-free.ttf?4l2k0u') format('truetype'),
-    url('../fonts/linearicons-free.woff?4l2k0u') format('woff'),
-    url('../fonts/linearicons-free.svg?4l2k0u#linearicons-free') format('svg');
+  src:  url('../fonts/linearicons-free.eot');
+  src:  url('../fonts/linearicons-free.eot') format('embedded-opentype'),
+    url('../fonts/linearicons-free.ttf') format('truetype'),
+    url('../fonts/linearicons-free.woff') format('woff'),
+    url('../fonts/linearicons-free.svg') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
